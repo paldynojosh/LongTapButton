@@ -46,14 +46,16 @@ namespace Pallab.LongTapButton
             Debug.Assert(_raycastImage != null && _delayStartLongTap > 0);
 
             _raycastImage.OnPointerEnterAsObservable()
-                .Subscribe(_ => { _isPointed.Value = true; });
+                .Subscribe(_ => { _isPointed.Value = true; })
+                .AddTo(this);
             _raycastImage.OnPointerExitAsObservable()
                 .Subscribe(_ =>
                 {
                     _isPointed.Value = false;
                     _cts?.Cancel();
                     _cts = new CancellationTokenSource();
-                });
+                })
+                .AddTo(this);
 
             _raycastImage.OnPointerDownAsObservable()
                 .Where(_ => _lastWaitTask.Status.IsCompleted())
@@ -61,13 +63,15 @@ namespace Pallab.LongTapButton
                 {
                     _onPointerDown.OnNext(Unit.Default);
                     _lastWaitTask = WaitTapEvent();
-                });
+                })
+                .AddTo(this);
             _raycastImage.OnPointerUpAsObservable()
                 .Subscribe(_ =>
                 {
                     _cts?.Cancel();
                     _cts = new CancellationTokenSource();
-                });
+                })
+                .AddTo(this);
         }
 
         private async UniTask WaitTapEvent()
