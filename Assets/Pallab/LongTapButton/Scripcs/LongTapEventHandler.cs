@@ -11,11 +11,11 @@ namespace Pallab.LongTapButton
     [RequireComponent(typeof(Graphic))]
     public class LongTapEventHandler : MonoBehaviour
     {
-        [SerializeField] private Graphic _raycastImage;
         [SerializeField] private float _delayStartLongTap;
         [SerializeField] private float _fireLongTapTime;
 
         private readonly Subject<Unit> _onLongTap = new Subject<Unit>();
+        private Graphic _raycastImage;
 
         public IObservable<Unit> OnLongTap => _onLongTap;
 
