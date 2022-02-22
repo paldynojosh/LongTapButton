@@ -561,9 +561,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3751811438418448507, guid: ff92170f3dcd74f7d8e88c8c6a42012d, type: 3}
+      propertyPath: _longTapHandler
+      value: 
+      objectReference: {fileID: 3751811438269062903}
     - target: {fileID: 3751811438418448509, guid: ff92170f3dcd74f7d8e88c8c6a42012d, type: 3}
       propertyPath: m_Name
       value: LongTapButton
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff92170f3dcd74f7d8e88c8c6a42012d, type: 3}
+--- !u!114 &3751811438269062903 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3751811439539572037, guid: ff92170f3dcd74f7d8e88c8c6a42012d, type: 3}
+  m_PrefabInstance: {fileID: 3751811438269062902}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e51b5b74f99e0418dbf24df32848f852, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
