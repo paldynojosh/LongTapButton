@@ -1,4 +1,6 @@
 using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -24,15 +26,33 @@ namespace Pallab.LongTapButton
             _fireLongTapTime = 0.5f;
         }
 
-        private void Start()
+        private void Awake()
         {
-            Debug.Assert(_raycastImage != null && _delayStartLongTap > 0);
+            _raycastImage = GetComponent<Graphic>();
+            Validate();
 
             _raycastImage.OnPointerDownAsObservable()
                 .Subscribe(_ =>
                 {
+                    WaitFinishLongTap(this.GetCancellationTokenOnDestroy()).Forget();
                 })
                 .AddTo(this);
+        }
+
+        private async UniTaskVoid WaitFinishLongTap(CancellationToken cancellationToken)
+        {
+            var time = Time.time;
+            await _raycastImage.OnPointerUpAsObservable().Take(1).ToUniTask(cancellationToken: cancellationToken);
+
+            if (_delayStartLongTap + _fireLongTapTime < Time.time - time)
+            {
+                _onLongTap.OnNext(Unit.Default);
+            }
+        }
+
+        private void Validate()
+        {
+            Debug.Assert(_raycastImage != null && _delayStartLongTap > 0);
         }
     }
 }
